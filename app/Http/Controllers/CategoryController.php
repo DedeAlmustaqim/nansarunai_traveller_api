@@ -10,7 +10,7 @@ class CategoryController extends Controller
     // Menampilkan semua kategori
     public function index()
     {
-        $categories = Category::paginate();
+        $categories = Category::with('subCategories')->paginate();
         return response()->json($categories);
     }
 
@@ -38,6 +38,7 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|unique:categories|max:255',
+            'img_path' => 'required',
         ]);
 
         $category = Category::findOrFail($id);

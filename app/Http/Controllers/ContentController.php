@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Content; // Pastikan Anda mengganti ini sesuai dengan model yang Anda gunakan
-use Illuminate\Support\Facades\DB;
+
 
 class ContentController extends Controller
 {
-    // Mendapatkan semua data contents
+   
+
     public function index(Request $request)
     {
         $query = Content::with('category', 'subCategory');
-    
+
         // Cek apakah parameter 'category_id' telah diberikan dalam request
         if (!empty($request->input('sub_category'))) {
             $subCategoryId = $request->input('sub_category');
@@ -29,9 +30,9 @@ class ContentController extends Controller
             });
         }
         $perPage = $request->input('per_page', 10); // Jumlah item per halaman (default 10)
-    
+
         $contents = $query->paginate($perPage);
-    
+
         return response()->json($contents);
     }
 
@@ -41,14 +42,14 @@ class ContentController extends Controller
     {
         $content = Content::with('category', 'subCategory')->findOrFail($id);
 
-        return response()->json(['data'=>$content]);
+        return response()->json(['data' => $content]);
     }
 
     // Menyimpan data content baru
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
+            'title' => 'required',
             'content' => 'required',
             'address' => 'required',
             'img_path' => 'required',
@@ -69,7 +70,7 @@ class ContentController extends Controller
         $content = Content::findOrFail($id);
 
         $validatedData = $request->validate([
-            'name' => 'required',
+            'title' => 'required',
             'content' => 'required',
             'address' => 'required',
             'img_path' => 'required',

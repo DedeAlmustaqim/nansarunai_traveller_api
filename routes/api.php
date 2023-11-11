@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\SubCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -35,6 +38,12 @@ Route::prefix('category')->group(function () {
     Route::post('/', [CategoryController::class, 'store']);
     Route::put('/{id}', [CategoryController::class, 'update']);
     Route::delete('/{id}', [CategoryController::class, 'destroy']);
+});
+Route::prefix('sub_category')->group(function () {
+    Route::get('/', [SubCategoryController::class, 'index']);
+    Route::post('/', [SubCategoryController::class, 'store']);
+    Route::put('/{id}', [SubCategoryController::class, 'update']);
+    Route::delete('/{id}', [SubCategoryController::class, 'destroy']);
 });
 
 Route::prefix('carousel')->group(function () {
